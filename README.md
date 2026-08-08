@@ -393,9 +393,7 @@ The bridge is intentionally narrow: it exposes fixed services, not raw register 
 ## Results Snapshot
 
 <p align="center">
-  <img src="assets/figures/mehen_results_snapshot.png" alt="MEHEN validation, implementation, and latency results" width="850">
 </p>
-
 ## Sponsors and Acknowledgments
 
 <p align="center">
