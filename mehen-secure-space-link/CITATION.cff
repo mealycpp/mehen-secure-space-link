@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: "MEHEN Secure Space-Link: F′-Visible TRNG + ASCON Services on AUP-ZU3"
+authors:
+  - family-names: El-Hadedy
+    given-names: Mohamed
+    orcid: ""
+message: "If you use this repository, please cite the MEHEN paper and this repository."
+year: 2026
+repository-code: "https://github.com/mealycpp/mehen-secure-space-link"

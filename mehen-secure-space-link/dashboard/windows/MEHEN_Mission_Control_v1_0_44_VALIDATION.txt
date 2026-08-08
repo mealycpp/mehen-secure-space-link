@@ -1,0 +1,22 @@
+MEHEN Mission Control v1.0.44 validation
+
+Fix target:
+- CHECK + PRIME / F-PRIME EVENT SET could remain GATE: BUSY after the action succeeded.
+
+Root cause found by inspection:
+- Poll-Metrics parsed ACTION_DURATION_SEC and called Complete-ActionTimer() directly.
+- Complete-ActionTimer() clears ActiveActionName but does not change the visible GATE.
+- After ActiveActionName was cleared, later completion detectors could not move GATE from BUSY to DONE.
+
+Fix:
+- ACTION_DURATION_SEC parsing now updates timing without clearing ActiveActionName silently.
+- If the duration belongs to the currently active action and no ACTION FAILED marker exists, it calls Complete-ActiveActionSafe(), which sets GATE:DONE, STATUS, metrics, and log state together.
+- Added robust CHECK completion based on AUP1_SERVICE_CHECK=PASS, AUP2_SERVICE_CHECK=PASS, and FPRIME_EVENT_SAFE_PRIME_DONE or visible HASH_TEST F-Prime command passes.
+
+Static validation performed:
+- Python link agent compile: PASS
+- Bash syntax: fprime_watchdog_remote.sh PASS
+- Bash syntax: mehen_remote_control.sh PASS
+- Zip packaging: PASS
+
+Hardware/F-Prime execution was not run in this container; it requires the user's AUP boards and Windows PowerShell environment.

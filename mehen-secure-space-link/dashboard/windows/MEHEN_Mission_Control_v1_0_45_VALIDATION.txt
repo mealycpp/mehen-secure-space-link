@@ -1,0 +1,10 @@
+MEHEN Mission Control v1.0.45 validation
+
+Focus: primary-flow ordering fix.
+
+Checks performed in package workspace:
+- Version strings updated to v1.0.45 PRIMARY-FLOW-ORDERED.
+- Primary button order inspected: 1 RESET, 2 CHECK, 3 ESTABLISH, 4 SEND AUP1->AUP2, 5 SEND AUP2->AUP1, 6 TAMPER, 7 FULL DEMO.
+- OPTIONAL F-PRIME EVENT SET moved below the main demo buttons.
+- Existing busy-gate logic retained.
+- Existing link-agent, watchdog, telemetry, and full-demo files retained from v1.0.44.

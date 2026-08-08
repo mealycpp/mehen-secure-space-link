@@ -1,0 +1,26 @@
+MEHEN Mission Control v1.0.41 validation
+
+Purpose:
+- Prevent operator from launching the next mission action while a previous action is still BUSY.
+- Fix CHECK + PRIME staying BUSY after successful board proof and safe F-Prime prime.
+
+Checks performed locally in the container:
+- Python compile for mehen_secure_link_agent.py: PASS
+- Bash syntax for board-side helper scripts: PASS
+- Zip integrity: PASS
+- PowerShell source patch inspection: PASS
+
+Implemented safeguards:
+- Mission buttons are disabled while ACTION GATE is BUSY; STOP remains available.
+- Clicks during BUSY are ignored and logged as BLOCKED instead of launching a second action.
+- CHECK + PRIME completion can be detected from explicit sentinels:
+  AUP1_SERVICE_CHECK=PASS
+  AUP2_SERVICE_CHECK=PASS
+  FPRIME_EVENT_SAFE_PRIME_DONE
+- F-PRIME EVENT SET completion can be detected from explicit sentinels:
+  FPRIME_FULL_EVENT_SET_RESULT=PASS
+  FPRIME_FULL_EVENT_SET_DONE
+
+Limitations:
+- This package was not executed against the physical AUP boards from the container.
+- Runtime confirmation still depends on the Windows dashboard reading the action logs.

@@ -1,0 +1,10 @@
+MEHEN Mission Control v1.0.17 local checks performed in the build container:
+- Python syntax compile for mehen_secure_link_agent.py.
+- Bash syntax check for mehen_remote_control.sh.
+- Static scan for dangerous PowerShell $var: string patterns.
+- Static scan for old inline grep pipelines.
+- Local loopback link-agent test: receiver + normal send PASS.
+- Local loopback link-agent test: tamper send returns BAD_TAG/rejected as expected.
+- Zip integrity test.
+
+Runtime checks still require live AUP boards and Windows PowerShell.

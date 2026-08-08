@@ -1,0 +1,17 @@
+# Runtime logs
+logs/
+*.log
+*.tmp
+*.bak
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Evidence artifacts generated during local runs
+*.zip

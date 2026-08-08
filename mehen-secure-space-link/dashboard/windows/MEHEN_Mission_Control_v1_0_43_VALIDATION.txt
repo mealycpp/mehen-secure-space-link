@@ -1,0 +1,24 @@
+MEHEN Mission Control v1.0.43 validation
+
+Purpose
+- Fix repeated-action gate completion bug seen after F-PRIME EVENT SET completed but ACTION GATE stayed BUSY.
+
+Root cause
+- Completion sentinels used constant Mark-Seen keys such as fprime_full_event_set_done, action_complete:<name>, and link_action_result_pass:<mode>:<action>.
+- After a previous successful run, repeated runs could update metrics (for example F' events = FULL SET DONE) but skip the gate-completion block because the sentinel key was already marked seen.
+
+Fix
+- F-PRIME EVENT SET completion now depends on the current ActiveActionName == fprime_event_set and FPRIME_FULL_EVENT_SET_DONE being present.
+- CHECK + PRIME completion now depends on ActiveActionName == check_services and the explicit safe-prime/check sentinels.
+- Link action completion now clears the gate when the active action matches the current link action result.
+- Generic ACTION COMPLETE completion now clears the gate only when it matches the currently active action.
+- This makes repeated button runs complete correctly instead of staying BUSY.
+
+Local static checks
+- bash -n fprime_watchdog_remote.sh: PASS
+- bash -n mehen_remote_control.sh: PASS
+- python3 -m py_compile mehen_secure_link_agent.py: PASS
+- zip integrity: PASS
+
+Limitations
+- The actual Windows WinForms dashboard and AUP boards cannot be executed from this Linux container.

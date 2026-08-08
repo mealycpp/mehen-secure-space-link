@@ -1,0 +1,13 @@
+MEHEN Mission Control v1.0.42 validation
+
+Fix focus:
+- Replaced Add-Content live-log writer in RUN_MEHEN_LINK_ACTION.ps1 with FileStream append using FileShare.ReadWrite.
+- Prevents nonfatal "Stream was not readable" errors when dashboard polls logs/link_live.log during full-demo actions.
+
+Local checks performed:
+- PowerShell unsafe colon scan: PASS
+- Bash syntax for .sh helpers: PASS
+- Python compile for mehen_secure_link_agent.py: PASS
+- Zip integrity: PASS
+
+Runtime board verification still requires the user's AUP1/AUP2 environment.
