@@ -405,3 +405,22 @@ The views and conclusions contained here are those of the author and should not 
 Sponsor logo files may be placed under `assets/logos/` using filenames such as `navy.png`, `onr.png`, `afrl.png`, `dod.png`, and `amd.png`. Use only logos or brand assets that are permitted for public repository use.
 
 <!-- MEHEN README ENHANCEMENT END -->
+
+<!-- MEHEN-SPONSORS-START -->
+
+## Sponsors and Acknowledgments
+
+<p align="center">
+  <img src="assets/logos/sponsors/afrl-card.png" alt="AFRL — Agreement FA8650-24-2-2403" width="360"/>
+  <img src="assets/logos/sponsors/onr-sfrp-card.png" alt="ONR SFRP — Summer Faculty Research Program" width="360"/>
+</p>
+<p align="center">
+  <img src="assets/logos/sponsors/dod-card.png" alt="U.S. DoD — Award W911NF-24-1-0265" width="360"/>
+  <img src="assets/logos/sponsors/navy-neec-card.png" alt="U.S. Navy NEEC — Grant N001742310002" width="360"/>
+</p>
+
+This work was supported by the U.S. Navy Naval Engineering Education Center (NEEC), the Office of Naval Research Summer Faculty Research Program (ONR SFRP), the U.S. Department of Defense under award **W911NF-24-1-0265**, and the Air Force Research Laboratory (AFRL) under agreement **FA8650-24-2-2403**.
+
+The views and conclusions are those of the author and should not be interpreted as necessarily representing the official policies or endorsements, either expressed or implied, of AFRL or the U.S. Government.
+
+<!-- MEHEN-SPONSORS-END -->
