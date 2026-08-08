@@ -251,15 +251,17 @@ The views and conclusions are those of the author and do not necessarily represe
 **MEHEN: make hardware security commandable, observable, and flight-software visible.**
 
 </div>
-
 <!-- MEHEN README ENHANCEMENT START -->
+
+<p align="center">
+  <img src="assets/figures/mehen_system_architecture.png" alt="MEHEN system architecture" width="900">
+</p>
 
 <p align="center">
   <img alt="F Prime" src="https://img.shields.io/badge/F%27-flight--software-1f6feb?style=for-the-badge">
   <img alt="AUP-ZU3" src="https://img.shields.io/badge/AUP--ZU3-Zynq%20UltraScale%2B-7c3aed?style=for-the-badge">
   <img alt="ASCON" src="https://img.shields.io/badge/ASCON-HASH%20%7C%20XOF%20%7C%20AEAD-0ea5e9?style=for-the-badge">
   <img alt="TRNG" src="https://img.shields.io/badge/TRNG-board--resident%20entropy-16a34a?style=for-the-badge">
-  <img alt="Status" src="https://img.shields.io/badge/validation-PASS-success?style=for-the-badge">
 </p>
 
 ## Paper-backed Results at a Glance
@@ -296,7 +298,7 @@ MEHEN is a runtime-reconfigurable security architecture for space flight softwar
 
 ## Architecture Figures
 
-### Fig. 1. End-to-end MEHEN system architecture
+### End-to-end MEHEN system architecture
 
 <p align="center">
   <img src="assets/figures/mehen_system_architecture.png" alt="MEHEN system architecture" width="850">
@@ -304,7 +306,7 @@ MEHEN is a runtime-reconfigurable security architecture for space flight softwar
 
 The flight element exposes the SecureLaneBridge above a backend service layer. Below it, the runtime-reconfigurable security architecture combines the configurable TRNG subsystem, DMA/FIFO service path, and multi-mode ASCON lane.
 
-### Fig. 2. F Prime integration path
+### F Prime integration path
 
 <p align="center">
   <img src="assets/figures/mehen_fprime_integration.png" alt="MEHEN F Prime integration path" width="850">
@@ -312,7 +314,7 @@ The flight element exposes the SecureLaneBridge above a backend service layer. B
 
 Commands flow from the laptop ground station through the F Prime deployment into the SecureLaneBridge and hardware service interface. Events and telemetry report status back to the operator.
 
-### Fig. 3. Hardware service path
+### Hardware service path
 
 <p align="center">
   <img src="assets/figures/mehen_hardware_architecture.png" alt="MEHEN hardware architecture" width="850">
@@ -390,18 +392,12 @@ The bridge is intentionally narrow: it exposes fixed services, not raw register 
 
 > MEHEN is a working prototype and research artifact, not a mission-qualified crypto subsystem. The current implementation uses one integrated TRNG-ASCON lane, reports board-level TRNG smoke testing rather than a full SP 800-90B entropy assessment, and emits decrypted stream output before tag verification fully resolves. Downstream software must gate use of decrypted output on the authentication status path.
 
-## Results Snapshot
+## Paper Figures and Tables
+
+A compact paper-derived visual summary is included below for quick review.
 
 <p align="center">
   <img src="assets/figures/mehen_results_snapshot.png" alt="MEHEN validation, implementation, and latency results" width="850">
 </p>
-
-## Acknowledgments and Sponsor Support
-
-This work was supported by the U.S. Navy Naval Engineering Education Center (NEEC), the Office of Naval Research Summer Faculty Research Program (SFRP), the U.S. Department of Defense under award `W911NF-24-1-0265`, and the Air Force Research Laboratory (AFRL) under agreement `FA8650-24-2-2403`.
-
-The views and conclusions contained here are those of the author and should not be interpreted as necessarily representing the official policies or endorsements, either expressed or implied, of AFRL or the U.S. Government.
-
-Sponsor logo files may be placed under `assets/logos/` using filenames such as `navy.png`, `onr.png`, `afrl.png`, `dod.png`, and `amd.png`. Use only logos or brand assets that are permitted for public repository use.
 
 <!-- MEHEN README ENHANCEMENT END -->
