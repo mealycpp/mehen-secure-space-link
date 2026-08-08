@@ -1,0 +1,29 @@
+#ifndef FW_TIME_TESTER_HPP
+#define FW_TIME_TESTER_HPP
+
+#include <gtest/gtest.h>
+#include <Fw/Time/Time.hpp>
+
+namespace Fw {
+class TimeTester {
+  public:
+    // ----------------------------------------------------------------------
+    // Construction and destruction
+    // ----------------------------------------------------------------------
+    TimeTester();
+    ~TimeTester();
+
+    // ----------------------------------------------------------------------
+    // Tests
+    // ----------------------------------------------------------------------
+    void test_InstantiateTest();
+    void test_InstantiateFromFloatTest();
+    void test_MathTest();
+    void test_FloatOperations();
+    void test_CopyTest();
+    void test_ZeroTimeEquality();
+    void test_TimeToTimeValue();
+};
+}  // namespace Fw
+
+#endif  // FW_TIME_TESTER_HPP

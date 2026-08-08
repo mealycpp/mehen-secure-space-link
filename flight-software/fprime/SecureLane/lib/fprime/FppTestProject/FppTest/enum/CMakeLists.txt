@@ -1,0 +1,26 @@
+# ====================================================================== 
+# CMakeLists.txt
+# ====================================================================== 
+
+set(SOURCE_FILES
+  "${CMAKE_CURRENT_LIST_DIR}/component.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/default.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/explicit.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/implicit.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/interval.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/serialize_type.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/state_machine.fpp"
+)
+register_fprime_module()
+
+# Declare dependencies on test modules
+set(UT_MOD_DEPS
+  Fw/Test
+  STest
+)
+
+set(UT_SOURCE_FILES
+    "${CMAKE_CURRENT_LIST_DIR}/EnumToStringTest.cpp"
+  "${CMAKE_CURRENT_LIST_DIR}/main.cpp"
+)
+register_fprime_ut()
