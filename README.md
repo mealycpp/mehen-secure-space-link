@@ -251,3 +251,153 @@ The views and conclusions are those of the author and do not necessarily represe
 **MEHEN: make hardware security commandable, observable, and flight-software visible.**
 
 </div>
+<!-- MEHEN README ENHANCEMENT START -->
+
+<p align="center">
+  <img src="assets/figures/mehen_system_architecture.png" alt="MEHEN system architecture" width="900">
+</p>
+
+<p align="center">
+  <img alt="F Prime" src="https://img.shields.io/badge/F%27-flight--software-1f6feb?style=for-the-badge">
+  <img alt="AUP-ZU3" src="https://img.shields.io/badge/AUP--ZU3-Zynq%20UltraScale%2B-7c3aed?style=for-the-badge">
+  <img alt="ASCON" src="https://img.shields.io/badge/ASCON-HASH%20%7C%20XOF%20%7C%20AEAD-0ea5e9?style=for-the-badge">
+  <img alt="TRNG" src="https://img.shields.io/badge/TRNG-board--resident%20entropy-16a34a?style=for-the-badge">
+</p>
+
+## Paper-backed Results at a Glance
+
+MEHEN is a runtime-reconfigurable security architecture for space flight software. It integrates a board-resident TRNG with a multi-mode ASCON cryptographic lane and exposes the combined service through F Prime command, event, and telemetry mechanisms.
+
+<table>
+  <tr>
+    <th align="left">Layer</th>
+    <th align="left">What MEHEN provides</th>
+    <th align="left">Repository evidence</th>
+  </tr>
+  <tr>
+    <td><b>Hardware security</b></td>
+    <td>TRNG + multi-mode ASCON lane over a unified DMA/FIFO service path</td>
+    <td><code>hardware/hls/</code>, <code>hardware/overlays/</code></td>
+  </tr>
+  <tr>
+    <td><b>Flight software</b></td>
+    <td>F Prime SecureLaneBridge commands for entropy, HASH, XOF, and AEAD round-trip service checks</td>
+    <td><code>flight-software/fprime/SecureLane/</code></td>
+  </tr>
+  <tr>
+    <td><b>Board validation</b></td>
+    <td>TRNG smoke test, ASCON KATs, hardware benchmark scripts, and AUP-ZU3 overlay artifacts</td>
+    <td><code>software/board-tests/</code>, <code>software/kat/</code>, <code>software/benchmarks/</code></td>
+  </tr>
+  <tr>
+    <td><b>Operator demo</b></td>
+    <td>Two-AUP secure space-link mission-control dashboard with pass/reject visualization</td>
+    <td><code>dashboard/windows/</code>, <code>evidence/</code></td>
+  </tr>
+</table>
+
+## Architecture Figures
+
+### End-to-end MEHEN system architecture
+
+<p align="center">
+  <img src="assets/figures/mehen_system_architecture.png" alt="MEHEN system architecture" width="850">
+</p>
+
+The flight element exposes the SecureLaneBridge above a backend service layer. Below it, the runtime-reconfigurable security architecture combines the configurable TRNG subsystem, DMA/FIFO service path, and multi-mode ASCON lane.
+
+### F Prime integration path
+
+<p align="center">
+  <img src="assets/figures/mehen_fprime_integration.png" alt="MEHEN F Prime integration path" width="850">
+</p>
+
+Commands flow from the laptop ground station through the F Prime deployment into the SecureLaneBridge and hardware service interface. Events and telemetry report status back to the operator.
+
+### Hardware service path
+
+<p align="center">
+  <img src="assets/figures/mehen_hardware_architecture.png" alt="MEHEN hardware architecture" width="850">
+</p>
+
+The hardware path uses AXI control/status registers for TRNG enable, mode selection, length control, and status. Data moves through MM2S DMA, input FIFO, the multi-mode ASCON lane, output FIFO, and S2MM DMA.
+
+## SecureLaneBridge Command Map
+
+| F Prime command | Hardware-backed service | Expected event / result |
+|---|---|---|
+| `GET_KEY128` | TRNG-backed 128-bit key material | `Key128Ready` |
+| `HASH_TEST` | ASCON hash service | `HashOk` |
+| `XOF_TEST` | ASCON XOF service | `XofOk` |
+| `ROUNDTRIP` | AEAD encrypt/decrypt validation | `RoundTripOk` |
+
+The bridge is intentionally narrow: it exposes fixed services, not raw register access.
+
+## Functional Validation Summary
+
+| Validation item | Result |
+|---|---:|
+| TRNG AXI smoke test | PASS |
+| ASCON HASH KAT | PASS |
+| ASCON XOF KAT | PASS |
+| ASCON AEAD-ENC KAT | PASS |
+| ASCON AEAD-DEC KAT | PASS |
+| ASCON auth-fail smoke | PASS |
+| End-to-end hardware KAT run | PASS |
+
+## Implementation Snapshot
+
+| Metric | Value |
+|---|---:|
+| Operating frequency | 327 MHz |
+| Worst negative slack (WNS) | 0.061 ns |
+| Total negative slack (TNS) | 0.00 ns |
+| Worst hold slack (WHS) | 0.010 ns |
+| Total hold slack (THS) | 0.00 ns |
+| LUT | 19,732 |
+| FF | 27,975 |
+| BRAM | 6.5 |
+| Estimated design power | 3.37 W |
+| Measured board power | 4.21 W |
+| Measured board voltage | 9.16 V |
+| Measured board current | 0.46 A |
+
+## Mean Service Latency
+
+<p align="center">
+  <img src="assets/figures/mehen_service_latency.png" alt="MEHEN mean service latency" width="760">
+</p>
+
+| Service | Mean latency |
+|---|---:|
+| HASH | 0.469 ms |
+| XOF | 0.457 ms |
+| AEAD encrypt | 0.453 ms |
+| AEAD decrypt | 0.453 ms |
+
+## F Prime Integration Results
+
+| Integration item | Result |
+|---|---:|
+| F Prime deployment on board | PASS |
+| Laptop GDS TCP connection | PASS |
+| SecureLaneBridge command registration | PASS |
+| `GET_KEY128` remote execution | PASS |
+| `HASH_TEST` remote execution | PASS |
+| `ROUNDTRIP` remote execution | PASS |
+| Bridge telemetry update | PASS |
+| Bridge error path during shown runs | PASS |
+
+## Prototype Boundaries
+
+> MEHEN is a working prototype and research artifact, not a mission-qualified crypto subsystem. The current implementation uses one integrated TRNG-ASCON lane, reports board-level TRNG smoke testing rather than a full SP 800-90B entropy assessment, and emits decrypted stream output before tag verification fully resolves. Downstream software must gate use of decrypted output on the authentication status path.
+
+## Paper Figures and Tables
+
+A compact paper-derived visual summary is included below for quick review.
+
+<p align="center">
+  <img src="assets/figures/mehen_results_snapshot.png" alt="MEHEN validation, implementation, and latency results" width="850">
+</p>
+
+<!-- MEHEN README ENHANCEMENT END -->
